@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Regex Matcher and Email Validator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f9;
+        }
+        h1 {
+            color: #333;
+        }
+        form {
+            margin-bottom: 20px;
+        }
+        label {
+            font-weight: bold;
+        }
+        textarea, input {
+            width: 100%;
+            margin-bottom: 10px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .results, .validation {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #e7f3e7;
+            border: 1px solid #d4edda;
+            border-radius: 5px;
+        }
+        ul {
+            padding-left: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Regex Matcher</h1>
+    <form method="post" action="/results">
+        <label for="test_string">Test String:</label><br>
+        <textarea id="test_string" name="test_string" rows="4" cols="50">{{ test_string or '' }}</textarea><br>
+
+        <label for="regex_pattern">Regex Pattern:</label><br>
+        <input type="text" id="regex_pattern" name="regex_pattern" value="{{ regex_pattern or '' }}"><br>
+
+        <button type="submit">Find Matches</button>
+    </form>
+
+    {% if matches is not none %}
+    <div class="results">
+        <h2>Matches:</h2>
+        {% if matches %}
+        <ul>
+            {% for match in matches %}
+                <li>{{ match }}</li>
+            {% endfor %}
+        </ul>
+        {% else %}
+        <p>No matches found.</p>
+        {% endif %}
+    </div>
+    {% endif %}
+
+    <h1>Email Validator</h1>
+    <form method="post" action="/validate_email">
+        <label for="email">Email:</label><br>
+        <input type="text" id="email" name="email" value="{{ email or '' }}"><br>
+        <button type="submit">Validate Email</button>
+    </form>
+
+    {% if email_validation_message %}
+    <div class="validation">
+        <p>{{ email_validation_message }}</p>
+    </div>
+    {% endif %}
+</body>
+</html>
